@@ -35,6 +35,10 @@ def main():
 
 
 def get_routes():
+    '''
+    Return a list of routes 
+    Routes filtered on the API side to save client-side effort and bandwidth.
+    '''
     r = requests.get("https://api-v3.mbta.com/routes", {'filter[type]': '0,1'})
     if r.status_code != 200:
         raise Exception("got non-200 status code. bombing out.")
@@ -45,6 +49,9 @@ def get_routes():
 
 
 def get_routes_to_stops(route_data):
+    '''
+    Return a dictionary where the keys are routeIds and values are an lists-of-stopIds
+    '''
     routeIds_to_stopIds = {}
     for temp_route in route_data['data']:
         logger.debug( 'getting stops for route: ' + temp_route['id'])
@@ -60,6 +67,10 @@ def get_routes_to_stops(route_data):
 
 
 def show_min_and_max_stops(routeIds_to_stopIds):
+    '''
+    Display the route with the Most stops and the route with the Least stops.
+    Return a set stops.
+    '''
     # Find min & max stops
     logger.info("Showing Min and Max stops ------------------------------------------")
     set_of_stops = set()
@@ -88,6 +99,11 @@ def show_min_and_max_stops(routeIds_to_stopIds):
 
 
 def build_route_intersections(set_of_stops, routeIds_to_stopIds):
+    '''
+    This is a crude inverted dictionary.
+    Also I should probably remove all the key+value where the value is list of length One.
+    Returns a dictionary where a keys are stopIds and the values are lists-of-routeIds
+    '''
     stopIds_to_routeIds = {}
     for temp_stop in set_of_stops:
         stopIds_to_routeIds[temp_stop] = []
@@ -98,6 +114,9 @@ def build_route_intersections(set_of_stops, routeIds_to_stopIds):
 
 
 def show_intersections(stopIds_to_routeIds, routeId_to_routeLongName):
+    '''
+    Method for outputting the STOPS where ROUTES intersect
+    '''
     logger.info("Showing intersections -----------------------------------------------")
     for stop,routes in stopIds_to_routeIds.items():
         if len(routes) > 1:
@@ -105,7 +124,12 @@ def show_intersections(stopIds_to_routeIds, routeId_to_routeLongName):
             for temp_route in routes:
                 logger.info("    " + routeId_to_routeLongName[temp_route])
 
+
 def directions(r_to_s, s_to_r):
+    '''
+    Method for gathering STOPS as user input and then giving feedback on how to get between the STOPS.
+    This method cannot handle multiple-intersections yet.
+    '''
     i1 = input('first STOP id: ')
     i2 = input('last STOP id: ')
 
@@ -151,6 +175,7 @@ def directions(r_to_s, s_to_r):
 
     # fourth case:  routes with multiple hops
     # todo (sorry!)
+    raise Exception('Congratulations!  Youve won an Exception!')
 
 
 if __name__ == "__main__":
