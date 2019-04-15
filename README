@@ -5,6 +5,15 @@ example inputs:
   place-hymnl  and  place-knncl  
   place-forhl  and  place-brntn
 
+To run tests and lints, you need to run the following (your mileage may vary based on OS):
+  sudo apt install python3-pip
+  pip3 install -U pytest
+  pip3 install -U mock
+  pip3 install -U pytest-mock
+  pip3 install -U pylint
+  python3 -m pytest
+  pylint mbta.py
+
 MBTA API Portal:
 https://api-v3.mbta.com/
 
