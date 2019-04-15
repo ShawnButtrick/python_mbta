@@ -33,6 +33,7 @@ def main():
     # Do directions
     directions(routeIds_to_stopIds, stopIds_to_routeIds)
 
+
 def get_routes():
     r = requests.get("https://api-v3.mbta.com/routes", {'filter[type]': '0,1'})
     if r.status_code != 200:
@@ -48,9 +49,9 @@ def get_routes_to_stops(route_data):
     for temp_route in route_data['data']:
         logger.debug( 'getting stops for route: ' + temp_route['id'])
 
-        x = requests.get("https://api-v3.mbta.com/stops", {'filter[route]': temp_route['id']})
-        if x.status_code == 200:
-            temp_stops_data = x.json()
+        r = requests.get("https://api-v3.mbta.com/stops", {'filter[route]': temp_route['id']})
+        if r.status_code == 200:
+            temp_stops_data = r.json()
             routeIds_to_stopIds[temp_route['id']] = [] #stops_data
             for stop in temp_stops_data['data']:
                 routeIds_to_stopIds[temp_route['id']].append(stop['id'])
