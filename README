@@ -1,0 +1,22 @@
+Python3 app.
+run "python3 mbta.py"
+application will output some information and then prompt for 2 "stop ids".
+example inputs:  
+  place-hymnl  and  place-knncl  
+  place-forhl  and  place-brntn
+
+MBTA API Portal:
+https://api-v3.mbta.com/
+
+APIs Doc:
+https://api-v3.mbta.com/docs/swagger/index.html#/
+
+Sample ROUTES call:
+https://api-v3.mbta.com/routes?filter[type]=0,1
+
+Sample STOPS call:
+https://api-v3.mbta.com/stops?filter[route]=Green-B
+
+
+
+Map here for convenience:  http://s3.amazonaws.com/media.wbur.org/wordpress/1/files/2013/10/1007_new-mbta-map.jpg
