@@ -170,7 +170,7 @@ def directions(r_to_s, s_to_r):
         for er in end_routes:
             for stop,routes in s_to_r.items():
                 if sr in routes and er in routes:
-                    logger.info(i1 +' to ' + i2 + ' via ' + stop)
+                    logger.info(i1 + ' on ' + sr +' to ' + i2 + ' on ' + er + ' via intersection at ' + stop)
                     return
 
     # fourth case:  routes with multiple hops
